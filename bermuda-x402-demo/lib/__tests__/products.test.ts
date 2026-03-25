@@ -79,8 +79,8 @@ describe('calcTotal', () => {
 // ── formatUSDC ───────────────────────────────────────────────────────────────
 
 describe('formatUSDC', () => {
-  it('uses 4 decimals for values < 0.01', () => {
-    expect(formatUSDC(0.001)).toBe('0.0010')
+  it('formats sub-cent amounts without unnecessary trailing zeros', () => {
+    expect(formatUSDC(0.001)).toBe('0.001')
     expect(formatUSDC(0.0001)).toBe('0.0001')
   })
 

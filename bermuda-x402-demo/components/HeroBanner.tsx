@@ -1,12 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Feather, Shield, Wine, Zap } from 'lucide-react'
+import { Leaf, Shield, Wine, Zap } from 'lucide-react'
 
 /** Inline layout so the hero never covers the whole viewport if Tailwind/CSS fails to load.
  *  (next/image `fill` is position:absolute; without a positioned ancestor it anchors to the viewport.)
  */
-const heroMinHeight = 'min(72vh, 36rem)'
+const heroMinHeight = 'min(76vh, 40rem)'
 
 const shellStyle: React.CSSProperties = {
   position: 'relative',
@@ -28,6 +28,10 @@ const contentStyle: React.CSSProperties = {
   alignItems: 'center',
   justifyContent: 'center',
   textAlign: 'center',
+  // Inline gap so the hero stack keeps rhythm if Tailwind utilities fail to load
+  gap: 'clamp(1rem, 3.5vw, 1.75rem)',
+  paddingTop: '2.5rem',
+  paddingBottom: '2.5rem',
 }
 
 export function HeroBanner() {
@@ -41,6 +45,7 @@ export function HeroBanner() {
           src="/hero-champagne.png"
           alt=""
           fill
+          unoptimized
           className="origin-center scale-[0.85] object-cover object-center sm:object-[center_42%]"
           priority
           sizes="100vw"
@@ -62,30 +67,49 @@ export function HeroBanner() {
 
       <div
         style={contentStyle}
-        className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-10"
+        className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10"
       >
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-bermuda-500/30 bg-bermuda-950/70 px-3 py-1.5 text-xs font-medium text-bermuda-200 shadow-lg shadow-black/30 backdrop-blur-sm sm:mb-5">
-          <Zap className="h-3.5 w-3.5 text-bermuda-400" />
-          Powered by Bermuda Protocol × x402
+        <div className="inline-flex items-center gap-2 rounded-full border border-bermuda-500/30 bg-bermuda-950/70 px-3 py-1.5 text-xs font-medium text-bermuda-200 shadow-lg shadow-black/30 backdrop-blur-sm">
+          <Zap className="h-3.5 w-3.5 shrink-0 text-bermuda-400" />
+          Powered by Bermuda × x402
         </div>
 
-        <h1 className="mb-6 w-full max-w-2xl px-1 text-3xl font-bold tracking-tight [text-shadow:0_2px_28px_rgba(0,0,0,0.75)] sm:mb-8 sm:text-5xl md:text-6xl">
-          <span className="block text-white">Pop the cork.</span>
-          <span className="mt-1 block text-bermuda-300 [text-shadow:0_2px_24px_rgba(0,0,0,0.8)] sm:mt-1.5 md:mt-2">
-            Not your privacy
-          </span>
+        <h1
+          className="w-full max-w-3xl px-1 text-center font-display text-3xl font-semibold tracking-tight text-white [text-shadow:0_2px_28px_rgba(0,0,0,0.75)] sm:text-5xl md:text-6xl"
+          style={{ lineHeight: 1.15, margin: 0 }}
+        >
+          Pop the cork.
         </h1>
+        <p
+          className="w-full max-w-3xl px-1 text-center font-display text-3xl font-semibold tracking-tight text-bermuda-300 [text-shadow:0_2px_24px_rgba(0,0,0,0.55)] sm:text-5xl md:text-6xl"
+          style={{ lineHeight: 1.15, margin: 0, color: '#5eead4' }}
+        >
+          Not your privacy
+        </p>
 
-        <div className="flex flex-col items-center gap-5">
+        <div
+          className="flex w-full max-w-3xl flex-col items-center sm:max-w-none"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 'clamp(1.25rem, 4vw, 2rem)',
+          }}
+        >
           <Link
             href="#bermuda-collection"
-            className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#F0CA4A] via-[#E8B422] to-[#D4920E] px-10 py-3.5 text-base font-semibold text-bermuda-950 shadow-md shadow-black/25 transition hover:from-[#F5D65C] hover:via-[#EDBF2E] hover:to-[#E0A010] hover:shadow-lg hover:shadow-black/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
+            className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#F0CA4A] via-[#E8B422] to-[#D4920E] px-10 py-3.5 text-base font-semibold shadow-md shadow-black/25 transition hover:from-[#F5D65C] hover:via-[#EDBF2E] hover:to-[#E0A010] hover:shadow-lg hover:shadow-black/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400"
+            style={{
+              color: '#042f2e',
+              textDecoration: 'none',
+              fontWeight: 600,
+            }}
           >
             Shop the Collection
           </Link>
 
           <div
-            className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap sm:gap-x-10 md:gap-x-14 sm:gap-y-2"
+            className="flex w-full max-w-md flex-col items-center justify-center gap-4 sm:max-w-none sm:flex-row sm:flex-wrap sm:gap-x-10 md:gap-x-14 sm:gap-y-3"
             aria-label="Key features"
           >
             <div className="flex items-center gap-2 font-mono text-xs sm:text-sm">
@@ -95,7 +119,7 @@ export function HeroBanner() {
               </span>
             </div>
             <div className="flex items-center gap-2 font-mono text-xs sm:text-sm">
-              <Feather className="h-4 w-4 shrink-0 text-bermuda-300" strokeWidth={1.25} aria-hidden />
+              <Leaf className="h-4 w-4 shrink-0 text-bermuda-300" strokeWidth={1.25} aria-hidden />
               <span className="text-white/80 [text-shadow:0_1px_12px_rgba(0,0,0,0.45)]">Complete discretion</span>
             </div>
             <div className="flex items-center gap-2 font-mono text-xs sm:text-sm">

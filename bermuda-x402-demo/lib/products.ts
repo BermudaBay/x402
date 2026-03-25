@@ -104,7 +104,12 @@ export function calcTotal(items: Array<{ product: Product; qty: number }>): numb
  * sub-cent prices (e.g. 0.001 USDC for conference demos).
  */
 export function formatUSDC(value: number): string {
-  if (value < 0.01) return value.toFixed(4)
-  if (value < 1)    return value.toFixed(3)
+  if (value === 0) return '0.0000'
+  if (value < 0.01) {
+    const rounded = Number(value.toFixed(4))
+    if (rounded === 0) return '0.0000'
+    return String(rounded)
+  }
+  if (value < 1) return value.toFixed(3)
   return value.toFixed(2)
 }

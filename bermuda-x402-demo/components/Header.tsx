@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ShoppingCart, ChevronDown } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
@@ -18,18 +19,12 @@ function HowItWorksBody() {
           displayed. That balance reflects the agent&apos;s shielded pool, not a connected browser wallet.
         </li>
         <li>
-          <strong className="text-bermuda-400">Faucet —</strong> Hit &quot;Top Up&quot; to mint mock USDC into the
-          agent. Make sure <code className="text-bermuda-500">FAUCET_PK</code> stays funded with Base Sepolia ETH or
-          mints will fail during live demos.
-        </li>
-        <li>
           <strong className="text-bermuda-400">Checkout —</strong> The shielded pool funds before you pay. When you
           complete a purchase, the agent spends from it — the receipt and inspector panel show the full flow live.
         </li>
         <li>
           <strong className="text-bermuda-400">Transaction link —</strong> After payment, the tx link defaults to Base
-          Sepolia Blockscout. Override with <code className="text-bermuda-500">NEXT_PUBLIC_EXPLORER_TX_URL</code> to
-          point elsewhere.
+          Sepolia Blockscout.
         </li>
         <li>
           <strong className="text-bermuda-400">No mic? —</strong> Use the quick preset buttons. Same flow, same result
@@ -54,46 +49,40 @@ export function Header() {
       }}
       className="backdrop-blur-sm"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl flex-col px-4 pt-[max(0.5rem,env(safe-area-inset-top))] sm:px-6 lg:px-8">
+        {/* Dedicated row so the wordmark never shares a flex line with the mobile &quot;How this works&quot; block */}
         <div
+          className="flex w-full min-h-[3.25rem] items-center justify-between gap-3 py-2.5 sm:h-16 sm:min-h-0 sm:py-0"
           style={{
             display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
             alignItems: 'center',
             justifyContent: 'space-between',
-            minHeight: '3.5rem',
-            gap: '0.5rem',
-            paddingTop: '0.5rem',
-            paddingBottom: '0.5rem',
           }}
-          className="sm:h-16 sm:py-0"
         >
-          <div className="flex min-w-0 flex-1 items-center">
-            <Link
-              href="/"
-              className="shrink-0 flex flex-col gap-0.5 rounded-md outline-none ring-offset-2 ring-offset-[rgba(4,47,46,0.96)] focus-visible:ring-2 focus-visible:ring-bermuda-400 min-w-0"
-            >
-              {/* Wordmark + tagline split from public/bermuda-logo-white.svg */}
-              <img
-                src="/bermuda-logo-wordmark.svg"
-                alt="Bermuda Cellars"
-                width={1775}
-                height={122}
-                decoding="async"
-                fetchPriority="high"
-                className="h-6 w-auto max-w-[200px] object-contain object-left sm:h-7 sm:max-w-[240px] md:h-8 md:max-w-[280px]"
-              />
-              <img
-                src="/bermuda-tagline.svg"
-                alt="Seamless, Compliant and Composable Privacy"
-                width={935}
-                height={56}
-                decoding="async"
-                className="hidden sm:block h-2 w-auto max-w-[min(100%,240px)] object-contain object-left opacity-90 md:max-w-[280px] md:h-2.5"
-              />
-            </Link>
+          <div className="min-w-0 flex-1 pr-1" style={{ minWidth: 0 }}>
+            <div className="flex flex-col gap-2">
+              <Link
+                href="/"
+                className="inline-block w-fit shrink-0 outline-none ring-offset-2 ring-offset-[rgba(4,47,46,0.96)] focus-visible:ring-2 focus-visible:ring-bermuda-400"
+              >
+                <Image
+                  src="/bermuda-logo-wordmark.svg"
+                  alt="Bermuda"
+                  width={560}
+                  height={40}
+                  priority
+                  className="h-[40px] w-auto max-w-[min(360px,60vw)] object-contain object-left sm:h-[48px] sm:max-w-[400px]"
+                />
+              </Link>
+            </div>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+          <div
+            className="flex shrink-0 items-center gap-1 sm:gap-2"
+            style={{ display: 'flex', flexDirection: 'row', flexShrink: 0, alignItems: 'center' }}
+          >
             <details className="hidden md:block group relative">
               <summary className="list-none cursor-pointer flex items-center gap-0.5 text-[11px] text-white select-none whitespace-nowrap px-2 py-1.5 rounded-lg hover:bg-white/10">
                 How it works
@@ -119,12 +108,12 @@ export function Header() {
           </div>
         </div>
 
-        <details className="md:hidden border-t border-bermuda-800/40 py-2 group">
-          <summary className="list-none flex items-center gap-1 text-[11px] text-white font-medium cursor-pointer select-none touch-manipulation">
-            <ChevronDown className="w-3.5 h-3.5 text-white transition-transform group-open:rotate-180 shrink-0" />
-            How this demo works
+        <details className="group w-full border-t border-bermuda-800/50 py-3 md:hidden">
+          <summary className="flex cursor-pointer list-none items-center gap-2 text-[11px] font-medium text-white select-none touch-manipulation">
+            <ChevronDown className="h-3.5 w-3.5 shrink-0 text-bermuda-300 transition-transform group-open:rotate-180" />
+            <span className="leading-snug">How this demo works</span>
           </summary>
-          <div className="mt-2 pl-0.5 text-[11px] text-bermuda-400 leading-relaxed pb-1">
+          <div className="mt-3 border-l border-bermuda-700/50 pl-3 text-[11px] leading-relaxed text-bermuda-400">
             <HowItWorksBody />
           </div>
         </details>

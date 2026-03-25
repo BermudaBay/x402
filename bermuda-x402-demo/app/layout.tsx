@@ -13,8 +13,8 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Bermuda Cellars — Private Champagne',
-  description: 'Demo store showing x402 private payments powered by Bermuda Protocol',
+  title: 'Pop your cork. Not your privacy',
+  description: 'Pop your cork. Not your privacy — prestige champagne with x402 private checkout, powered by Bermuda.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

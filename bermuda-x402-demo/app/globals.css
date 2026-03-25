@@ -23,6 +23,14 @@ body {
 @layer base {
   html {
     @apply bg-bermuda-950 text-bermuda-100;
+    /* Anchor scroll lands below sticky two-row header on mobile */
+    scroll-padding-top: max(5.5rem, calc(4.5rem + env(safe-area-inset-top)));
+  }
+
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: 4rem;
+    }
   }
 
   * {

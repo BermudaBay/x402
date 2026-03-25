@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  devIndicators: false,
   // Exclude Bermuda SDK from server-side webpack bundling
   // (SDK uses import.meta.dirname for circuit loading, which requires Node.js runtime)
   serverExternalPackages: [
