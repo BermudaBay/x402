@@ -187,7 +187,7 @@ const lastRunRef   = { current: 0 }
 
 export function AgentProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(agentReducer, INITIAL_STATE)
-  const { addItem, clearCart, closeCart, openCart } = useCart()
+  const { addItem, clearCart, openCart, showReceipt } = useCart()
   const { addStep, clearSteps } = useX402Inspector()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null)
@@ -359,18 +359,26 @@ export function AgentProvider({ children }: { children: React.ReactNode }) {
       if (label) dispatch({ type: 'PAY_STATUS', message: label })
     }
 
+    let cancelled = false
     bermudaCheckout(wallet.walletClient, checkoutParam, onStep, wallet.publicClient)
       .then(result => {
+        if (cancelled) return
         clearCart()
-        closeCart()
+        showReceipt(result)
+        openCart()
         dispatch({ type: 'CONFIRMED', order: result })
         wallet.getUsdcBalance().then(b => dispatch({ type: 'BALANCE', balance: b }))
         speakConfirmation(itemsForSpeech)
       })
       .catch((err: unknown) => {
+        if (cancelled) return
         const msg = err instanceof Error ? err.message : 'Payment failed'
         dispatch({ type: 'ERROR', message: msg })
       })
+
+    return () => {
+      cancelled = true
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase])
 
@@ -424,6 +432,9 @@ export function AgentProvider({ children }: { children: React.ReactNode }) {
 
 // ── TTS helper ─────────────────────────────────────────────────────────────
 
+/** Spoken form of x402 so the synth says "x four oh two", not "x four hundred two". */
+const X402_SPOKEN = 'x four oh two'
+
 // Phonetic English fallback for when no French voice is available
 const FRENCH_PHONETIC: Record<string, string> = {
   'Moët & Chandon Impérial':     'mo ay ay and shan don im pay ree ahl',
@@ -457,7 +468,7 @@ function speakConfirmation(items: ParsedItem[]) {
       }
       say(`Order confirmed. ${qty} ${qty === 1 ? 'bottle' : 'bottles'} of`, enVoice)
       say(name, frVoice, frVoice.lang)
-      say('Paid privately via Bermuda x402.', enVoice)
+      say(`Paid privately via Bermuda ${X402_SPOKEN}.`, enVoice)
     } else {
       // Phonetic fallback — substitutes tricky French words for the English synth
       const spokenName = name
@@ -466,7 +477,9 @@ function speakConfirmation(items: ParsedItem[]) {
       const summary = name
         ? `${qty} ${qty === 1 ? 'bottle' : 'bottles'} of ${spokenName}`
         : spokenName
-      const u = new SpeechSynthesisUtterance(`Order confirmed. ${summary}. Paid privately via Bermuda x402.`)
+      const u = new SpeechSynthesisUtterance(
+        `Order confirmed. ${summary}. Paid privately via Bermuda ${X402_SPOKEN}.`,
+      )
       u.rate  = 0.95
       u.pitch = 1.05
       synth.speak(u)

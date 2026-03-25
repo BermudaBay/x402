@@ -39,6 +39,9 @@ const config: Config = {
         'slide-up': 'slideUp 0.4s ease-out',
         'slide-in-right': 'slideInRight 0.3s ease-out',
         'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+        'bubble-rise': 'bubbleRise 1.35s ease-out infinite',
+        'gold-pulse-shield': 'goldPulseShield 1s ease-in-out infinite',
+        'receipt-reveal': 'receiptReveal 0.55s ease-out forwards',
       },
       keyframes: {
         fadeIn: {
@@ -56,6 +59,18 @@ const config: Config = {
         pulseGlow: {
           '0%, 100%': { boxShadow: '0 0 0 0 rgba(20, 184, 166, 0.4)' },
           '50%': { boxShadow: '0 0 20px 8px rgba(20, 184, 166, 0.2)' },
+        },
+        bubbleRise: {
+          '0%': { transform: 'translateY(0) scale(1)', opacity: '0.5' },
+          '100%': { transform: 'translateY(-7rem) scale(0.35)', opacity: '0' },
+        },
+        goldPulseShield: {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(251, 191, 36, 0)' },
+          '50%': { boxShadow: '0 0 28px 6px rgba(251, 191, 36, 0.28)' },
+        },
+        receiptReveal: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
     },

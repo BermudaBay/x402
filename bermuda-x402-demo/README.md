@@ -120,7 +120,7 @@ bermuda-x402-demo/
 │   ├── ProductCard.tsx         # Individual product card
 │   ├── CartDrawer.tsx          # Slide-out cart with checkout button
 │   ├── CheckoutButton.tsx      # x402 payment flow — instrumented
-│   ├── ConfirmationModal.tsx   # Post-purchase order confirmation
+│   ├── CartReceiptPanel.tsx    # In-drawer private receipt after checkout
 │   ├── FaucetModal.tsx         # Test USDC request modal
 │   └── X402Inspector.tsx       # Live x402 protocol debug panel
 ├── context/

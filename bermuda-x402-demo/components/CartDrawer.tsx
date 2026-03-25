@@ -1,23 +1,49 @@
 'use client'
 
-import React from 'react'
-import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
+import React, { useCallback } from 'react'
+import { X, Minus, Plus, Trash2, ShoppingBag, Receipt } from 'lucide-react'
 import { useCart, MAX_CART_UNITS } from '@/context/CartContext'
 import { formatUSDC } from '@/lib/products'
 import { CheckoutButton } from './CheckoutButton'
+import { CartReceiptPanel } from './CartReceiptPanel'
 
 export function CartDrawer() {
-  const { items, isOpen, totalPrice, totalItems, closeCart, increment, decrement, removeItem } = useCart()
+  const {
+    items,
+    isOpen,
+    totalPrice,
+    totalItems,
+    closeCart,
+    dismissReceipt,
+    activeReceipt,
+    increment,
+    decrement,
+    removeItem,
+  } = useCart()
   const atDemoCap = totalItems >= MAX_CART_UNITS
 
-  if (!isOpen) return null
+  const handleClose = useCallback(() => {
+    dismissReceipt()
+    closeCart()
+  }, [dismissReceipt, closeCart])
+
+  const handleContinueShopping = useCallback(() => {
+    dismissReceipt()
+    closeCart()
+    requestAnimationFrame(() => {
+      document.getElementById('bermuda-collection')?.scrollIntoView({ behavior: 'smooth' })
+    })
+  }, [dismissReceipt, closeCart])
+
+  // Keep receipt visible after agent (or manual) checkout even if isOpen were false — showReceipt sets open, but this guards edge cases.
+  if (!isOpen && !activeReceipt) return null
 
   return (
     <>
       {/* Backdrop */}
       <div
         className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
-        onClick={closeCart}
+        onClick={handleClose}
       />
 
       {/* Drawer */}
@@ -25,23 +51,34 @@ export function CartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-bermuda-800/50">
           <div className="flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-bermuda-400" />
-            <h2 className="text-white font-semibold text-lg">Your Order</h2>
-            {items.length > 0 && (
+            {activeReceipt ? (
+              <Receipt className="w-5 h-5 text-gold-400/80" />
+            ) : (
+              <ShoppingBag className="w-5 h-5 text-bermuda-400" />
+            )}
+            <h2 className="text-white font-semibold text-lg">
+              {activeReceipt ? 'Private receipt' : 'Your Order'}
+            </h2>
+            {!activeReceipt && items.length > 0 && (
               <span className="px-2 py-0.5 rounded-full bg-bermuda-700/50 text-bermuda-300 text-xs font-medium">
                 {items.reduce((s, i) => s + i.qty, 0)} items
               </span>
             )}
           </div>
           <button
-            onClick={closeCart}
+            onClick={handleClose}
             className="text-bermuda-500 hover:text-white transition-colors"
+            type="button"
+            aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Items */}
+        {/* Body: receipt or cart */}
+        {activeReceipt ? (
+          <CartReceiptPanel order={activeReceipt} onContinue={handleContinueShopping} />
+        ) : (
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center py-16">
@@ -89,9 +126,10 @@ export function CartDrawer() {
             ))
           )}
         </div>
+        )}
 
         {/* Footer */}
-        {items.length > 0 && (
+        {!activeReceipt && items.length > 0 && (
           <div className="px-5 py-5 border-t border-bermuda-800/50 space-y-4">
             {/* Total */}
             <div className="flex items-center justify-between">
@@ -116,7 +154,7 @@ export function CartDrawer() {
               </p>
             </div>
 
-            <CheckoutButton onSuccess={closeCart} />
+            <CheckoutButton />
           </div>
         )}
       </div>

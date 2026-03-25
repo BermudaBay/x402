@@ -223,10 +223,9 @@ export function X402Inspector() {
 
   return (
     <div
-      className="fixed z-[60] pointer-events-none right-3 sm:right-4 flex flex-col items-end gap-0
-        bottom-5 pb-[max(0px,env(safe-area-inset-bottom))] sm:bottom-6"
+      className="fixed bottom-5 left-3 z-[60] flex flex-col items-start gap-0 pb-[max(0px,env(safe-area-inset-bottom))] pointer-events-none sm:bottom-6 sm:left-4"
     >
-      {/* Drawer expands upward; tab stays docked bottom-right */}
+      {/* Drawer expands upward; tab docked bottom-left (keeps right side clear for cart / modals) */}
       <div
         id={panelId}
         role="region"
@@ -325,12 +324,7 @@ export function X402Inspector() {
             <ChevronDown className="h-3.5 w-3.5 shrink-0 opacity-80" aria-hidden />
           </>
         ) : (
-          <>
-            <span className="whitespace-nowrap">Watch x402 live</span>
-            <span className="text-bermuda-500" aria-hidden>
-              →
-            </span>
-          </>
+          <span className="whitespace-nowrap">Watch x402 live</span>
         )}
       </button>
     </div>

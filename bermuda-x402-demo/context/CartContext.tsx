@@ -1,8 +1,9 @@
 'use client'
 
-import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react'
+import React, { createContext, useContext, useReducer, useEffect, useCallback, useState } from 'react'
 import { PRODUCTS, type Product } from '@/lib/products'
 import { MAX_CART_UNITS } from '@/lib/demo-limits'
+import type { CheckoutResult } from '@/lib/bermuda-client'
 
 // ──────────────────────────────────────────────────
 // Types
@@ -92,6 +93,10 @@ interface CartContextValue {
   totalItems: number
   totalPrice: number
   itemsParam: string
+  /** After a successful x402 checkout — drawer shows receipt until dismissed. */
+  activeReceipt: CheckoutResult | null
+  showReceipt: (order: CheckoutResult) => void
+  dismissReceipt: () => void
   addItem: (product: Product) => void
   removeItem: (productId: string) => void
   increment: (productId: string) => void
@@ -107,6 +112,16 @@ const STORAGE_KEY = 'bermuda-x402-cart'
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, { items: [], isOpen: false })
+  const [activeReceipt, setActiveReceipt] = useState<CheckoutResult | null>(null)
+
+  const showReceipt = useCallback((order: CheckoutResult) => {
+    setActiveReceipt(order)
+    dispatch({ type: 'SET_OPEN', open: true })
+  }, [])
+
+  const dismissReceipt = useCallback(() => {
+    setActiveReceipt(null)
+  }, [])
 
   // Hydrate from localStorage once on mount (must match catalog — corrupt data can crash CartDrawer)
   useEffect(() => {
@@ -164,6 +179,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         totalItems,
         totalPrice,
         itemsParam,
+        activeReceipt,
+        showReceipt,
+        dismissReceipt,
         addItem,
         removeItem,
         increment,

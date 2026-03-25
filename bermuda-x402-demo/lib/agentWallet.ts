@@ -15,6 +15,7 @@ import {
   http,
   formatUnits,
 } from 'viem'
+import { formatUSDC } from '@/lib/products'
 // Use ReturnType to avoid type conflicts when multiple viem versions are present
 type WalletClient = ReturnType<typeof createWalletClient>
 import { privateKeyToAccount } from 'viem/accounts'
@@ -82,7 +83,8 @@ export function getAgentWallet(): AgentWallet | null {
 
   const isTestenv = process.env.NEXT_PUBLIC_NETWORK === 'testenv'
   const chain = isTestenv ? hardhat : baseSepolia
-  const rpcUrl = isTestenv ? 'http://localhost:8545' : undefined
+  const envRpc = process.env.NEXT_PUBLIC_RPC_URL?.trim()
+  const rpcUrl = isTestenv ? 'http://localhost:8545' : envRpc || undefined
 
   const walletClient = createWalletClient({
     account,
@@ -95,18 +97,33 @@ export function getAgentWallet(): AgentWallet | null {
     transport: http(rpcUrl),
   })
 
+  const sleep = (ms: number) => new Promise<void>(r => setTimeout(r, ms))
+
   const getUsdcBalance = async (): Promise<string> => {
-    try {
+    const readOnce = async () => {
       const raw = await publicClient.readContract({
         address: USDC_ADDRESS,
         abi: ERC20_BALANCE_ABI,
         functionName: 'balanceOf',
         args: [account.address],
       })
-      return parseFloat(formatUnits(raw, 6)).toFixed(2)
-    } catch {
-      return '?'
+      const n = parseFloat(formatUnits(raw, 6))
+      return formatUSDC(n)
     }
+
+    let lastErr: unknown
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        return await readOnce()
+      } catch (e) {
+        lastErr = e
+        if (attempt < 2) await sleep(350 * (attempt + 1))
+      }
+    }
+    if (typeof console !== 'undefined' && console.warn) {
+      console.warn('[AgentWallet] USDC balanceOf failed after retries:', lastErr)
+    }
+    return '?'
   }
 
   _cached = { walletClient, publicClient, address: account.address, getUsdcBalance }

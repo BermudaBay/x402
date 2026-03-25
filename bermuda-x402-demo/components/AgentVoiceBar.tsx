@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import {
   Mic,
   MicOff,
@@ -9,6 +9,7 @@ import {
   Wallet,
   Zap,
   Droplets,
+  Loader2,
   CheckCircle,
   AlertCircle,
   ChevronLeft,
@@ -56,6 +57,10 @@ export function AgentVoiceBar() {
   const [panelOpen, setPanelOpen] = useState(false)
   const [faucetState, setFaucetState] = useState<FaucetState>('idle')
   const [faucetMsg, setFaucetMsg] = useState('')
+
+  useEffect(() => {
+    if (panelOpen && configured) refreshBalance()
+  }, [panelOpen, configured, refreshBalance])
 
   const pkStatus = getAgentPkStatus()
 
@@ -122,7 +127,9 @@ export function AgentVoiceBar() {
     }, 5000)
   }, [faucetState, refreshBalance])
 
-  const balanceLow = balance !== null && balance !== '?' && parseFloat(balance) < 10
+  const numericBalance =
+    balance !== null && balance !== '…' && balance !== '?' ? parseFloat(balance) : NaN
+  const balanceLow = !Number.isNaN(numericBalance) && numericBalance < 10
 
   const pkHelp =
     pkStatus === 'malformed' ? (
@@ -183,13 +190,34 @@ export function AgentVoiceBar() {
             {configured && balance !== null && (
               <div className="mb-4 rounded-xl border border-bermuda-800/40 bg-bermuda-900/30 px-3 py-2.5">
                 <p className="text-[9px] uppercase tracking-wider text-bermuda-600">Shielded USDC (pool)</p>
-                <p
-                  className={`mt-0.5 font-mono text-sm transition-all duration-500 ${
-                    balanceLow ? 'text-amber-400' : balance === '?' ? 'text-bermuda-600' : 'text-emerald-400'
-                  }`}
-                >
-                  <Wallet className="mr-1 inline h-3.5 w-3.5 shrink-0" aria-hidden />${balance} USDC
-                </p>
+                {balance === '…' ? (
+                  <p className="mt-0.5 flex items-center gap-2 font-mono text-sm text-bermuda-500">
+                    <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin" aria-hidden />
+                    Syncing balance…
+                  </p>
+                ) : balance === '?' ? (
+                  <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <p className="font-mono text-sm text-amber-400/90">
+                      <Wallet className="mr-1 inline h-3.5 w-3.5 shrink-0 align-text-bottom" aria-hidden />
+                      Unavailable
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => refreshBalance()}
+                      className="text-[11px] font-medium text-gold-400/90 underline decoration-gold-400/40 underline-offset-2 hover:text-gold-300"
+                    >
+                      Retry
+                    </button>
+                  </div>
+                ) : (
+                  <p
+                    className={`mt-0.5 font-mono text-sm transition-all duration-500 ${
+                      balanceLow ? 'text-amber-400' : 'text-emerald-400'
+                    }`}
+                  >
+                    <Wallet className="mr-1 inline h-3.5 w-3.5 shrink-0" aria-hidden />${balance} USDC
+                  </p>
+                )}
               </div>
             )}
 
