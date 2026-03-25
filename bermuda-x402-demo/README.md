@@ -1,4 +1,4 @@
-# Bermuda Cellars — x402 Private Champagne Demo
+# Pop the cork — x402 private champagne demo
 
 A conference demo showing [x402](https://x402.org) — the HTTP-native payment protocol — integrated with [Bermuda Protocol](https://github.com/BermudaBay)'s private payment scheme.
 

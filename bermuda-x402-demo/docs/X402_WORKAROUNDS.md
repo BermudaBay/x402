@@ -1,6 +1,6 @@
 # Bermuda x402 integration — documented workarounds
 
-This document describes **intentional workarounds** in the Bermuda Cellars demo so the stack works end-to-end today. They exist because of gaps between **Coinbase x402**, **bermuda-bay-sdk**, **Next.js bundling**, and **on-chain / relayer** requirements—not because of bugs in the demo app itself.
+This document describes **intentional workarounds** in the Pop the cork demo so the stack works end-to-end today. They exist because of gaps between **Coinbase x402**, **bermuda-bay-sdk**, **Next.js bundling**, and **on-chain / relayer** requirements—not because of bugs in the demo app itself.
 
 ---
 

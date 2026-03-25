@@ -111,7 +111,7 @@ export function withBermudaPayment(
             return `$${formatUSDC(calcTotal(items))}`
           },
         },
-        description: 'Bermuda private champagne checkout',
+        description: 'Pop the cork — private champagne checkout',
       },
       server,
       undefined, // paywallConfig

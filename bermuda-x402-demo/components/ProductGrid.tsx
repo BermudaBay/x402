@@ -11,10 +11,10 @@ export function ProductGrid() {
   return (
     <section
       id="bermuda-collection"
-      className="mx-auto max-w-7xl scroll-mt-24 px-4 py-12 sm:px-6 sm:scroll-mt-28 lg:px-8"
+      className="mx-auto max-w-7xl scroll-mt-[calc(5.5rem+env(safe-area-inset-top))] px-4 py-14 sm:scroll-mt-32 sm:px-6 lg:px-8"
     >
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold tracking-tight text-white">Bermuda Collection</h2>
+      <div className="mb-10">
+        <h2 className="text-3xl font-bold tracking-tight text-white">The collection</h2>
       </div>
 
       {/* Grid */}

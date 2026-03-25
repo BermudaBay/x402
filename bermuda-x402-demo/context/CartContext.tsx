@@ -154,14 +154,30 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  // Persist to localStorage on change
+  // Persist to localStorage on change (never throw — quota / private mode can crash the tab)
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items))
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items))
+    } catch {
+      try {
+        localStorage.removeItem(STORAGE_KEY)
+      } catch {
+        /* ignore */
+      }
+    }
   }, [state.items])
 
-  const totalItems = state.items.reduce((sum, i) => sum + i.qty, 0)
-  const totalPrice = state.items.reduce((sum, i) => sum + i.product.price * i.qty, 0)
-  const itemsParam = state.items.map(i => `${i.product.id}:${i.qty}`).join(',')
+  const totalItems = state.items.reduce((sum, i) => sum + (Number.isFinite(i.qty) ? i.qty : 0), 0)
+  const totalPrice = state.items.reduce((sum, i) => {
+    const p = i.product?.price
+    const q = i.qty
+    if (typeof p !== 'number' || !Number.isFinite(p) || !Number.isFinite(q)) return sum
+    return sum + p * q
+  }, 0)
+  const itemsParam = state.items
+    .filter(i => i.product?.id && Number.isFinite(i.qty))
+    .map(i => `${i.product!.id}:${i.qty}`)
+    .join(',')
 
   const addItem = useCallback((product: Product) => dispatch({ type: 'ADD', product }), [])
   const removeItem = useCallback((productId: string) => dispatch({ type: 'REMOVE', productId }), [])

@@ -223,22 +223,22 @@ export function X402Inspector() {
 
   return (
     <div
-      className="fixed bottom-5 left-3 z-[60] flex flex-col items-start gap-0 pb-[max(0px,env(safe-area-inset-bottom))] pointer-events-none sm:bottom-6 sm:left-4"
+      className="pointer-events-none fixed bottom-5 left-3 z-[60] flex max-h-[calc(100svh-1.5rem)] flex-col items-start justify-end gap-0 overflow-hidden pb-[max(0px,env(safe-area-inset-bottom))] sm:bottom-6 sm:left-4 sm:max-h-[calc(100svh-2rem)]"
     >
-      {/* Drawer expands upward; tab docked bottom-left (keeps right side clear for cart / modals) */}
+      {/* Drawer expands upward; capped so short viewports (e.g. embedded preview) don’t cover the grid */}
       <div
         id={panelId}
         role="region"
         aria-label="x402 protocol inspector"
         aria-hidden={!drawerOpen}
-        className={`pointer-events-auto mb-2 w-[min(100vw-1.5rem,20rem)] origin-bottom transition-all duration-300 ease-out ${
+        className={`pointer-events-auto mb-2 w-[min(100vw-1.5rem,20rem)] min-h-0 shrink origin-bottom transition-all duration-300 ease-out ${
           drawerOpen
-            ? 'max-h-[min(70vh,26rem)] translate-y-0 opacity-100'
+            ? 'max-h-[min(calc(100svh-7.5rem),24rem)] translate-y-0 opacity-100'
             : 'max-h-0 translate-y-2 opacity-0 pointer-events-none overflow-hidden mb-0'
         }`}
       >
         <div
-          className={`flex max-h-[min(70vh,26rem)] flex-col overflow-hidden rounded-xl border bg-bermuda-950/97 shadow-2xl backdrop-blur-md transition-shadow duration-200 ${borderColor} ${isPending ? 'animate-pulse-glow' : ''}`}
+          className={`flex min-h-0 max-h-[min(calc(100svh-7.5rem),24rem)] flex-col overflow-hidden rounded-xl border bg-bermuda-950/97 shadow-2xl backdrop-blur-md transition-shadow duration-200 ${borderColor} ${isPending ? 'animate-pulse-glow' : ''}`}
         >
           <div className="flex shrink-0 items-center gap-2 border-b border-bermuda-800/40 px-3 py-2">
             <Terminal className="h-3.5 w-3.5 shrink-0 text-bermuda-400" />
@@ -281,7 +281,10 @@ export function X402Inspector() {
             </button>
           </div>
 
-          <div ref={scrollRef} className="min-h-0 max-h-56 flex-1 overflow-y-auto overscroll-contain">
+          <div
+            ref={scrollRef}
+            className="min-h-0 max-h-[min(14rem,calc(100svh-11rem))] flex-1 overflow-y-auto overscroll-contain"
+          >
             {steps.length === 0 ? (
               <div className="px-3 py-4 text-center">
                 <p className="mb-1 text-[11px] font-medium text-bermuda-600">No payment yet</p>
@@ -311,7 +314,7 @@ export function X402Inspector() {
         aria-expanded={drawerOpen}
         aria-controls={panelId}
         onClick={() => setDrawerOpen(o => !o)}
-        className={`pointer-events-auto inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-left text-xs font-medium shadow-lg backdrop-blur-md transition-colors sm:text-[13px] ${
+        className={`pointer-events-auto inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-left text-xs font-medium shadow-lg backdrop-blur-md transition-colors sm:text-[13px] ${
           drawerOpen
             ? 'border-bermuda-600/50 bg-bermuda-900/95 text-bermuda-200 hover:bg-bermuda-800/95'
             : 'border-bermuda-700/45 bg-bermuda-950/90 text-bermuda-200/95 hover:border-bermuda-600/55 hover:bg-bermuda-900/90'

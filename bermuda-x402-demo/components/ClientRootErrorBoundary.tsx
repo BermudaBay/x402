@@ -48,21 +48,43 @@ export class ClientRootErrorBoundary extends Component<Props, State> {
             <code style={{ opacity: 0.85 }}>localStorage</code> key{' '}
             <code style={{ opacity: 0.85 }}>bermuda-x402-cart</code>.
           </p>
-          <button
-            type="button"
-            onClick={() => this.setState({ error: null })}
-            style={{
-              marginBottom: '1rem',
-              padding: '0.5rem 1rem',
-              borderRadius: 8,
-              border: '1px solid rgba(45, 212, 191, 0.4)',
-              background: 'rgba(13, 148, 136, 0.25)',
-              color: '#f5f5f4',
-              cursor: 'pointer',
-            }}
-          >
-            Try again
-          </button>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1rem' }}>
+            <button
+              type="button"
+              onClick={() => this.setState({ error: null })}
+              style={{
+                padding: '0.5rem 1rem',
+                borderRadius: 8,
+                border: '1px solid rgba(45, 212, 191, 0.4)',
+                background: 'rgba(13, 148, 136, 0.25)',
+                color: '#f5f5f4',
+                cursor: 'pointer',
+              }}
+            >
+              Try again
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                try {
+                  localStorage.removeItem('bermuda-x402-cart')
+                } catch {
+                  /* ignore */
+                }
+                window.location.reload()
+              }}
+              style={{
+                padding: '0.5rem 1rem',
+                borderRadius: 8,
+                border: '1px solid rgba(251, 191, 36, 0.35)',
+                background: 'rgba(120, 53, 15, 0.25)',
+                color: '#fde68a',
+                cursor: 'pointer',
+              }}
+            >
+              Clear cart & reload
+            </button>
+          </div>
           <pre
             style={{
               fontSize: '0.8rem',

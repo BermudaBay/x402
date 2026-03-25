@@ -1,0 +1,10 @@
+export declare const calcMPECDHAddress: (...args: any[]) => never
+export declare const getOwners: (...args: any[]) => never
+export declare const isMPECDHDeployed: (...args: any[]) => never
+export declare const isMPECDHReady: (...args: any[]) => never
+export declare const proposeDeploymentViaApproveHash: (...args: any[]) => never
+export declare const proposeMPECDHDeployment: (...args: any[]) => never
+export declare const mpecdh: (...args: any[]) => never
+export declare const buf: (...args: any[]) => never
+export declare const scalarMult: (...args: any[]) => never
+export declare const kdf: (...args: any[]) => never

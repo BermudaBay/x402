@@ -1,0 +1,13 @@
+{
+  "name": "mpecdh",
+  "version": "0.0.1",
+  "description": "Stub for mpecdh private package (Safe multisig MPECDH — not needed for x402 flow)",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  }
+}

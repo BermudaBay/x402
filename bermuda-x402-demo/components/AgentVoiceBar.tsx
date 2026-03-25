@@ -172,7 +172,7 @@ export function AgentVoiceBar() {
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-bermuda-300">
                   Voice agent
                 </p>
-                <p className="text-[9px] text-bermuda-600">Bermuda × x402 demo</p>
+                <p className="text-[9px] text-bermuda-600">Pop the cork × x402 demo</p>
               </div>
             </div>
             <button
