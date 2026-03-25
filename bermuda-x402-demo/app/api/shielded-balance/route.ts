@@ -31,8 +31,13 @@ function loadSDK(): Promise<SDKModule> {
   return _sdkCache
 }
 
-const IS_TESTENV   = process.env.NEXT_PUBLIC_NETWORK === 'testenv'
-const USDC_ADDRESS = (process.env.NEXT_PUBLIC_USDC_ADDRESS ?? '0x036CbD53842c5426634e7929541eC2318f3dCF7e').toLowerCase()
+const IS_TESTENV    = process.env.NEXT_PUBLIC_NETWORK === 'testenv'
+const IS_EXACT_MODE = process.env.NEXT_PUBLIC_BERMUDA_SCHEME === 'exact'
+// Always use real Base Sepolia USDC in Bermuda mode; MockUSDC only in exact mode
+const USDC_ADDRESS  = (IS_EXACT_MODE
+  ? (process.env.NEXT_PUBLIC_USDC_ADDRESS ?? '0x036CbD53842c5426634e7929541eC2318f3dCF7e')
+  : '0x036CbD53842c5426634e7929541eC2318f3dCF7e'
+).toLowerCase()
 
 export async function GET() {
   const pk = process.env.NEXT_PUBLIC_AGENT_PK

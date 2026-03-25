@@ -21,11 +21,13 @@ type WalletClient = ReturnType<typeof createWalletClient>
 import { privateKeyToAccount } from 'viem/accounts'
 import { baseSepolia, hardhat } from 'viem/chains'
 
-// In Bermuda mode: Base Sepolia USDC (hardcoded — same address the Bermuda SDK uses internally).
-// In exact mode: MockUSDC address from NEXT_PUBLIC_USDC_ADDRESS.
+// In Bermuda mode: always use real Base Sepolia USDC regardless of NEXT_PUBLIC_USDC_ADDRESS.
+// In exact mode: use MockUSDC from NEXT_PUBLIC_USDC_ADDRESS.
 const BASE_SEPOLIA_USDC = '0x036CbD53842c5426634e7929541eC2318f3dCF7e' as `0x${string}`
-const USDC_ADDRESS: `0x${string}` =
-  (process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}` | undefined) ?? BASE_SEPOLIA_USDC
+const IS_EXACT_MODE = process.env.NEXT_PUBLIC_BERMUDA_SCHEME === 'exact'
+const USDC_ADDRESS: `0x${string}` = IS_EXACT_MODE
+  ? ((process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}` | undefined) ?? BASE_SEPOLIA_USDC)
+  : BASE_SEPOLIA_USDC
 
 const ERC20_BALANCE_ABI = [
   {
@@ -100,30 +102,10 @@ export function getAgentWallet(): AgentWallet | null {
   const sleep = (ms: number) => new Promise<void>(r => setTimeout(r, ms))
 
   const getUsdcBalance = async (): Promise<string> => {
-    // Try shielded pool balance first (the real spendable balance after payments)
-    try {
-      const res = await fetch('/api/shielded-balance', { cache: 'no-store' })
-      if (res.ok) {
-        const data = await res.json() as { balance?: number; error?: string }
-        if (typeof data.balance === 'number') {
-          // Also read the regular ERC-20 balance and add to pool balance
-          let walletBalance = 0
-          try {
-            const raw = await publicClient.readContract({
-              address: USDC_ADDRESS,
-              abi: ERC20_BALANCE_ABI,
-              functionName: 'balanceOf',
-              args: [account.address],
-            })
-            walletBalance = parseFloat(formatUnits(raw, 6))
-          } catch { /* ignore */ }
-          const total = data.balance + walletBalance
-          return formatUSDC(total)
-        }
-      }
-    } catch { /* fall through to ERC-20 fallback */ }
-
-    // Fallback: plain ERC-20 balanceOf (works before any pool interaction)
+    // Read the ERC-20 USDC balance. In Bermuda mode this is the real Base Sepolia USDC.
+    // After a payment the agent's USDC moves into the shielded pool; the next payment
+    // auto-uses the pool via bermuda::anyhow, so this balance correctly reflects what's
+    // available to spend (wallet balance feeds the pool on-demand).
     let lastErr: unknown
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
@@ -133,8 +115,7 @@ export function getAgentWallet(): AgentWallet | null {
           functionName: 'balanceOf',
           args: [account.address],
         })
-        const n = parseFloat(formatUnits(raw, 6))
-        return formatUSDC(n)
+        return formatUSDC(parseFloat(formatUnits(raw, 6)))
       } catch (e) {
         lastErr = e
         if (attempt < 2) await sleep(350 * (attempt + 1))
