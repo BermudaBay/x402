@@ -1,0 +1,832 @@
+[
+    {
+        "type": "constructor",
+        "inputs": [
+            {
+                "name": "_transact2x4",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            },
+            {
+                "name": "_transact4x4",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            },
+            {
+                "name": "_withdraw2x4",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            },
+            {
+                "name": "_withdraw4x4",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            },
+            {
+                "name": "_withdrawPub2x4",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            },
+            {
+                "name": "_withdrawPub4x4",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            },
+            {
+                "name": "_mptVerifier",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            },
+            {
+                "name": "_levels",
+                "type": "uint32",
+                "internalType": "uint32"
+            },
+            {
+                "name": "_weth",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_compliance",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "receive",
+        "stateMutability": "payable"
+    },
+    {
+        "type": "function",
+        "name": "BN254_FIELD_SIZE",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "FIELD_SIZE",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "MAX_EXT_AMOUNT",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "int256",
+                "internalType": "int256"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "MAX_FEE",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "ROOT_HISTORY_SIZE",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "ZERO_VALUE",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "calculatePublicAmount",
+        "inputs": [
+            {
+                "name": "_extAmount",
+                "type": "int256",
+                "internalType": "int256"
+            },
+            {
+                "name": "_fee",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "stateMutability": "pure"
+    },
+    {
+        "type": "function",
+        "name": "compliance",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "currentRootIndex",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "filledSubtrees",
+        "inputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "getLastRoot",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "hashLeftRight",
+        "inputs": [
+            {
+                "name": "_left",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            },
+            {
+                "name": "_right",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "stateMutability": "pure"
+    },
+    {
+        "type": "function",
+        "name": "isKnownRoot",
+        "inputs": [
+            {
+                "name": "_root",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "isSpent",
+        "inputs": [
+            {
+                "name": "_nullifierHash",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "levels",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "mptVerifier",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "nextIndex",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "nullifierHashes",
+        "inputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "roots",
+        "inputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "transact",
+        "inputs": [
+            {
+                "name": "_args",
+                "type": "tuple",
+                "internalType": "struct Artifacts.Proof",
+                "components": [
+                    {
+                        "name": "proof",
+                        "type": "bytes",
+                        "internalType": "bytes"
+                    },
+                    {
+                        "name": "publicInputs",
+                        "type": "bytes32[]",
+                        "internalType": "bytes32[]"
+                    },
+                    {
+                        "name": "root",
+                        "type": "bytes32",
+                        "internalType": "bytes32"
+                    },
+                    {
+                        "name": "inputNullifiers",
+                        "type": "bytes32[]",
+                        "internalType": "bytes32[]"
+                    },
+                    {
+                        "name": "outputCommitments",
+                        "type": "bytes32[]",
+                        "internalType": "bytes32[]"
+                    },
+                    {
+                        "name": "publicAmount",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "extDataHash",
+                        "type": "bytes32",
+                        "internalType": "bytes32"
+                    },
+                    {
+                        "name": "noirProof",
+                        "type": "bytes",
+                        "internalType": "bytes"
+                    },
+                    {
+                        "name": "noirPublicInputs",
+                        "type": "bytes32[]",
+                        "internalType": "bytes32[]"
+                    },
+                    {
+                        "name": "challenge",
+                        "type": "bytes32",
+                        "internalType": "bytes32"
+                    },
+                    {
+                        "name": "blockNumber",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "blockHash",
+                        "type": "bytes32",
+                        "internalType": "bytes32"
+                    }
+                ]
+            },
+            {
+                "name": "_extData",
+                "type": "tuple",
+                "internalType": "struct Artifacts.ExtData",
+                "components": [
+                    {
+                        "name": "recipient",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "extAmount",
+                        "type": "int256",
+                        "internalType": "int256"
+                    },
+                    {
+                        "name": "relayer",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "fee",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "encryptedOutputs",
+                        "type": "bytes[]",
+                        "internalType": "bytes[]"
+                    },
+                    {
+                        "name": "unwrap",
+                        "type": "bool",
+                        "internalType": "bool"
+                    },
+                    {
+                        "name": "token",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "funder",
+                        "type": "address",
+                        "internalType": "address"
+                    }
+                ]
+            },
+            {
+                "name": "_permit",
+                "type": "tuple",
+                "internalType": "struct Artifacts.Permit",
+                "components": [
+                    {
+                        "name": "deadline",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "v",
+                        "type": "uint8",
+                        "internalType": "uint8"
+                    },
+                    {
+                        "name": "r",
+                        "type": "bytes32",
+                        "internalType": "bytes32"
+                    },
+                    {
+                        "name": "s",
+                        "type": "bytes32",
+                        "internalType": "bytes32"
+                    }
+                ]
+            },
+            {
+                "name": "_attestation",
+                "type": "tuple",
+                "internalType": "struct Attestation",
+                "components": [
+                    {
+                        "name": "uuid",
+                        "type": "string",
+                        "internalType": "string"
+                    },
+                    {
+                        "name": "expiration",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "attester",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "signature",
+                        "type": "bytes",
+                        "internalType": "bytes"
+                    }
+                ]
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "payable"
+    },
+    {
+        "type": "function",
+        "name": "transact2x4",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "transact4x4",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "weth",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "withdraw2x4",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "withdraw4x4",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "withdrawPub2x4",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "withdrawPub4x4",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IUltraVerifier"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "zeros",
+        "inputs": [
+            {
+                "name": "i",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "stateMutability": "pure"
+    },
+    {
+        "type": "event",
+        "name": "NewCommitment",
+        "inputs": [
+            {
+                "name": "commitment",
+                "type": "bytes32",
+                "indexed": false,
+                "internalType": "bytes32"
+            },
+            {
+                "name": "index",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            },
+            {
+                "name": "encryptedOutput",
+                "type": "bytes",
+                "indexed": false,
+                "internalType": "bytes"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "NewNullifier",
+        "inputs": [
+            {
+                "name": "nullifier",
+                "type": "bytes32",
+                "indexed": false,
+                "internalType": "bytes32"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "error",
+        "name": "DoubleSpend",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidBalance",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidBlacklistRoot",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidExtAmount",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidExternalDataHash",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidFee",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidFieldElement",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidFunder",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidMerkleRoot",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidNativeAmount",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidPublicAmount",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidPublickeyPoints",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidRecipient",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidStorageProof",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidToken",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidTransactionProof",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InvalidWithdrawalProof",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "LevelsIsZero",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "LevelsTooLarge",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "MerkleTreeFull",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "NativeTransferFailed",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "PoolComplianceDebug",
+        "inputs": [
+            {
+                "name": "encodedSigAndArgs",
+                "type": "bytes",
+                "internalType": "bytes"
+            },
+            {
+                "name": "encodedSigAndArgsHash",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "SafeERC20FailedOperation",
+        "inputs": [
+            {
+                "name": "token",
+                "type": "address",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "Unauthorized",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "UnexpectedEther",
+        "inputs": []
+    }
+]

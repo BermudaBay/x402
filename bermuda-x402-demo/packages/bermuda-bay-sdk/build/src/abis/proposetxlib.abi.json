@@ -1,0 +1,314 @@
+[
+    {
+        "type": "function",
+        "name": "confirm",
+        "inputs": [
+            {
+                "name": "safe",
+                "type": "address",
+                "internalType": "contract ISafe"
+            },
+            {
+                "name": "safeTxHash",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            },
+            {
+                "name": "sig",
+                "type": "bytes",
+                "internalType": "bytes"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "confirmations",
+        "inputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            },
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "isOwner",
+        "inputs": [
+            {
+                "name": "safe",
+                "type": "address",
+                "internalType": "contract ISafe"
+            },
+            {
+                "name": "signer",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "_isOwner",
+                "type": "bool",
+                "internalType": "bool"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "propose",
+        "inputs": [
+            {
+                "name": "safe",
+                "type": "address",
+                "internalType": "contract ISafe"
+            },
+            {
+                "name": "safeTx",
+                "type": "tuple",
+                "internalType": "struct ProposeTxLib.SafeTx",
+                "components": [
+                    {
+                        "name": "to",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "value",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "data",
+                        "type": "bytes",
+                        "internalType": "bytes"
+                    },
+                    {
+                        "name": "operation",
+                        "type": "uint8",
+                        "internalType": "enum Enum.Operation"
+                    },
+                    {
+                        "name": "safeTxGas",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "baseGas",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "gasPrice",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "gasToken",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "refundReceiver",
+                        "type": "address",
+                        "internalType": "address payable"
+                    },
+                    {
+                        "name": "nonce",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ]
+            },
+            {
+                "name": "sig",
+                "type": "bytes",
+                "internalType": "bytes"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "recoverSigner",
+        "inputs": [
+            {
+                "name": "safeTxHash",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            },
+            {
+                "name": "sig",
+                "type": "bytes",
+                "internalType": "bytes"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "signer",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "pure"
+    },
+    {
+        "type": "function",
+        "name": "signatures",
+        "inputs": [
+            {
+                "name": "",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes",
+                "internalType": "bytes"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "event",
+        "name": "Confirmed",
+        "inputs": [
+            {
+                "name": "safeAdrs",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "safeTxHash",
+                "type": "bytes32",
+                "indexed": true,
+                "internalType": "bytes32"
+            },
+            {
+                "name": "status",
+                "type": "uint8",
+                "indexed": true,
+                "internalType": "enum ProposeTxLib.Status"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "Proposed",
+        "inputs": [
+            {
+                "name": "safeAdrs",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "safeTxHash",
+                "type": "bytes32",
+                "indexed": true,
+                "internalType": "bytes32"
+            },
+            {
+                "name": "safeTx",
+                "type": "tuple",
+                "indexed": false,
+                "internalType": "struct ProposeTxLib.SafeTx",
+                "components": [
+                    {
+                        "name": "to",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "value",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "data",
+                        "type": "bytes",
+                        "internalType": "bytes"
+                    },
+                    {
+                        "name": "operation",
+                        "type": "uint8",
+                        "internalType": "enum Enum.Operation"
+                    },
+                    {
+                        "name": "safeTxGas",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "baseGas",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "gasPrice",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "gasToken",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "refundReceiver",
+                        "type": "address",
+                        "internalType": "address payable"
+                    },
+                    {
+                        "name": "nonce",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ]
+            },
+            {
+                "name": "status",
+                "type": "uint8",
+                "indexed": true,
+                "internalType": "enum ProposeTxLib.Status"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "error",
+        "name": "AlreadyConfirmed",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "AlreadyProposed",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "BadSigner",
+        "inputs": []
+    }
+]

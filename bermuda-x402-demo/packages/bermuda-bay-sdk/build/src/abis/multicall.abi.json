@@ -1,0 +1,22 @@
+[
+    {
+        "type": "function",
+        "name": "multicall",
+        "inputs": [
+            {
+                "name": "calls",
+                "type": "tuple[]",
+                "internalType": "struct Multicall.Call[]",
+                "components": [
+                    { "name": "to", "type": "address", "internalType": "address" },
+                    { "name": "data", "type": "bytes", "internalType": "bytes" },
+                    { "name": "value", "type": "uint256", "internalType": "uint256" }
+                ]
+            }
+        ],
+        "outputs": [{ "name": "returnData", "type": "bytes[]", "internalType": "bytes[]" }],
+        "stateMutability": "payable"
+    },
+    { "type": "error", "name": "CallFailed", "inputs": [] },
+    { "type": "error", "name": "InvalidMsgValue", "inputs": [] }
+]

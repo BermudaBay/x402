@@ -1,0 +1,54 @@
+{
+  "name": "bermuda-bay-sdk",
+  "version": "0.0.1",
+  "description": "Bermuda Bay TS SDK",
+  "type": "module",
+  "main": "build/src/x402-demo.js",
+  "module": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "./node_modules/.bin/tsc && cp -r src/circuits build/src/",
+    "fmt": "prettier --write . --config .prettierrc",
+    "test": "NODE_NO_WARNINGS=1 INIT_BB=1 mocha"
+  },
+  "author": "chiefbiiko",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bermudabay/sdk.git"
+  },
+  "license": "MIT",
+  "keywords": [],
+  "exports": {
+    ".": "./build/src/x402-demo.js"
+  },
+  "dependencies": {
+    "@aztec/bb.js": "0.87.6",
+    "@noble/curves": "1.9.0",
+    "@noble/hashes": "2.0.1",
+    "@noir-lang/noir_js": "1.0.0-beta.9",
+    "@safe-global/protocol-kit": "6.1.1",
+    "@stablelib/x25519": "2.0.1",
+    "@stablelib/xchacha20poly1305": "2.0.1",
+    "@x402/core": "2.5.0",
+    "@x402/evm": "2.5.0",
+    "@x402/fetch": "2.5.0",
+    "create-require": "1.1.1",
+    "ethers": "6.14.4",
+    "viem": "2.46.3"
+  },
+  "devDependencies": {
+    "@types/chai": "5.2.2",
+    "@types/mocha": "10.0.10",
+    "@types/sinon": "21.0.0",
+    "chai": "5.2.1",
+    "hardhat": "3.1.6",
+    "mocha": "11.3.0",
+    "msw": "2.12.7",
+    "node-fetch": "3.3.2",
+    "prettier": "3.6.2",
+    "sinon": "21.0.1",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.2"
+  }
+}

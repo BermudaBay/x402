@@ -1,0 +1,65 @@
+[
+    {
+        "type": "function",
+        "name": "messageCiphertext",
+        "inputs": [
+            {
+                "name": "topic",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            },
+            {
+                "name": "ciphertext",
+                "type": "bytes",
+                "internalType": "bytes"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "signMessageHash",
+        "inputs": [
+            {
+                "name": "msgHash",
+                "type": "bytes32",
+                "internalType": "bytes32"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "event",
+        "name": "MessageCiphertext",
+        "inputs": [
+            {
+                "name": "topic",
+                "type": "bytes32",
+                "indexed": true,
+                "internalType": "bytes32"
+            },
+            {
+                "name": "ciphertext",
+                "type": "bytes",
+                "indexed": false,
+                "internalType": "bytes"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "SignMessageHash",
+        "inputs": [
+            {
+                "name": "msgHash",
+                "type": "bytes32",
+                "indexed": true,
+                "internalType": "bytes32"
+            }
+        ],
+        "anonymous": false
+    }
+]
