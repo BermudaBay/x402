@@ -100,21 +100,41 @@ export function getAgentWallet(): AgentWallet | null {
   const sleep = (ms: number) => new Promise<void>(r => setTimeout(r, ms))
 
   const getUsdcBalance = async (): Promise<string> => {
-    const readOnce = async () => {
-      const raw = await publicClient.readContract({
-        address: USDC_ADDRESS,
-        abi: ERC20_BALANCE_ABI,
-        functionName: 'balanceOf',
-        args: [account.address],
-      })
-      const n = parseFloat(formatUnits(raw, 6))
-      return formatUSDC(n)
-    }
+    // Try shielded pool balance first (the real spendable balance after payments)
+    try {
+      const res = await fetch('/api/shielded-balance', { cache: 'no-store' })
+      if (res.ok) {
+        const data = await res.json() as { balance?: number; error?: string }
+        if (typeof data.balance === 'number') {
+          // Also read the regular ERC-20 balance and add to pool balance
+          let walletBalance = 0
+          try {
+            const raw = await publicClient.readContract({
+              address: USDC_ADDRESS,
+              abi: ERC20_BALANCE_ABI,
+              functionName: 'balanceOf',
+              args: [account.address],
+            })
+            walletBalance = parseFloat(formatUnits(raw, 6))
+          } catch { /* ignore */ }
+          const total = data.balance + walletBalance
+          return formatUSDC(total)
+        }
+      }
+    } catch { /* fall through to ERC-20 fallback */ }
 
+    // Fallback: plain ERC-20 balanceOf (works before any pool interaction)
     let lastErr: unknown
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        return await readOnce()
+        const raw = await publicClient.readContract({
+          address: USDC_ADDRESS,
+          abi: ERC20_BALANCE_ABI,
+          functionName: 'balanceOf',
+          args: [account.address],
+        })
+        const n = parseFloat(formatUnits(raw, 6))
+        return formatUSDC(n)
       } catch (e) {
         lastErr = e
         if (attempt < 2) await sleep(350 * (attempt + 1))

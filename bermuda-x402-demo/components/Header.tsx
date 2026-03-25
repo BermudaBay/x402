@@ -88,7 +88,7 @@ export function Header() {
                 How it works
                 <ChevronDown className="w-3 h-3 text-white transition-transform group-open:rotate-180" />
               </summary>
-              <div className="absolute right-0 top-full mt-1 w-[min(22rem,calc(100vw-2rem))] rounded-xl border border-bermuda-800/60 bg-bermuda-950/98 backdrop-blur-md shadow-xl p-3 text-[11px] text-bermuda-400 leading-relaxed z-50">
+              <div className="absolute right-0 top-full mt-1 w-[min(22rem,calc(100vw-2rem))] rounded-xl border border-bermuda-800/60 bg-bermuda-950 backdrop-blur-none shadow-xl p-3 text-[11px] text-bermuda-400 leading-relaxed z-50">
                 <HowItWorksBody />
               </div>
             </details>
